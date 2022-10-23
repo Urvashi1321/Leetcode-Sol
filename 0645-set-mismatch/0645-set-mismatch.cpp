@@ -1,15 +1,13 @@
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
-        int N = nums.size(), sum = N * (N + 1) / 2;
+        int N = nums.size();
         vector<int> ans(2);
-        vector<bool> seen(N+1);
-        for (int num : nums) {
-            sum -= num;
-            if (seen[num]) ans[0] = num;
-            seen[num] = true;
-        }
-        ans[1] = sum + ans[0];
+        for (int num : nums)
+            nums[(num - 1) % 10000] += 10000;
+        for (int i = 0; i < N; i++)
+            if (nums[i] > 20000) ans[0] = i + 1;
+            else if (nums[i] < 10001) ans[1] = i + 1;
         return ans;
     }
 };
