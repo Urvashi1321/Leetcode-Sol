@@ -1,21 +1,20 @@
 class Solution {
 public:
     vector<int> findBall(vector<vector<int>>& grid) {
-        vector<int> result(grid[0].size(), 0);
-
-        for (int col = 0; col < grid[0].size(); col++) {
-            int currentCol = col;
-            for (int row = 0; row < grid.size(); row++) {
-                int nextColumn = currentCol + grid[row][currentCol];
-                if (nextColumn < 0 || nextColumn > grid[0].size() - 1 ||
-                    grid[row][currentCol] != grid[row][nextColumn]) {
-                    result[col] = -1;
+        int m = grid.size(), n = grid[0].size();
+        vector<int> res;
+        for (int i = 0; i < n; ++i) {
+            int i1 = i, i2;
+            for (int j = 0; j < m; ++j) {
+                i2 = i1 + grid[j][i1];
+                if (i2 < 0 || i2 >= n || grid[j][i2] != grid[j][i1]) {
+                    i1 = -1;
                     break;
                 }
-                result[col] = nextColumn;
-                currentCol = nextColumn;
+                i1 = i2;
             }
+            res.push_back(i1);
         }
-        return result;
+        return res;
     }
 };
